@@ -2,6 +2,7 @@
 .~lock*
 target/*
 out/*
+bin/*
 .classpath
 .idea/*
 .project
