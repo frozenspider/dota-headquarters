@@ -1,0 +1,10 @@
+*~
+.~lock*
+target/*
+out/*
+.classpath
+.idea/*
+.project
+.settings/*
+*.iml
+stacktrace.log
