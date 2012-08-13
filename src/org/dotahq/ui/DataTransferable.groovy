@@ -6,11 +6,13 @@ import java.awt.datatransfer.UnsupportedFlavorException
 
 import org.dotahq.util.DragAndDropUtil
 
-class DataTransferrable implements Transferable {
+class DataTransferable implements Transferable {
 	private final Object data
+    private final Object owner
 	
-	public DataTransferrable(Object data){
+	public DataTransferable(Object data, Object owner){
 		this.data = data
+        this.owner = owner
 	}
 	
 	public DataFlavor[] getTransferDataFlavors(){
@@ -27,6 +29,6 @@ class DataTransferrable implements Transferable {
 		if (flavor != DragAndDropUtil.createDataFlavor(data)) {
 			throw new UnsupportedFlavorException()
 		}
-		return data
+		return [data, owner]
 	}
 }

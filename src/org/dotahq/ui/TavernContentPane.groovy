@@ -11,9 +11,11 @@ import javax.swing.JPanel
 
 import org.dotahq.entity.hero.HeroBaseStats
 
+import org.dotahq.util.IconUtil
+
 class TavernContentPane extends JPanel {
 	
-	private final List <IconRenderer> heroBaseIcons
+	private final List <EntityDragDropPanel> heroBaseIcons
 	private List <HeroBaseStats> heroBases
 	
 	public TavernContentPane() {
@@ -24,16 +26,21 @@ class TavernContentPane extends JPanel {
 			gridLayout(cols: 4, rows: 3)
 			def iconSize = list(iconDim, iconDim)
 			12.times {
-				heroBaseIcons << widget(new IconRenderer(), border: lineBorder(color: Color.black))
+				heroBaseIcons << widget(new EntityDragDropPanel().allowDrag(true), border: lineBorder(color: Color.black))
 			}
 		}
 		this.add(content, BL.CENTER)
+
+        // FIXME TODO
+        setHeroList(Collections.nCopies(7, new HeroBaseStats()))
 	}
 	
 	void setHeroList(List <HeroBaseStats> heroBases){
+        assert heroBases.size() <= heroBaseIcons.size()
 		this.heroBases = heroBases
-		heroBases.eachWithIndex { el, idx ->
-			heroBaseIcons[idx].setData(heroBases[idx], null) // TODO: Icon
+        heroBaseIcons.eachWithIndex { el, idx ->
+            def heroBase = heroBases[idx]
+			el.setData(heroBase, heroBase ? IconUtil.getIconFor(heroBase) : IconUtil.getEmptyIcon())
 		}
 	}
 }
