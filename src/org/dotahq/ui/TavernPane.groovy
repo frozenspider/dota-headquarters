@@ -1,11 +1,10 @@
 package org.dotahq.ui
 
 import static org.dotahq.util.CustomUtil.*
-import static org.dotahq.util.IconUtil.iconDim
+import static org.dotahq.util.ImageUtil.iconDim
 import groovy.swing.SwingBuilder
 
 import java.awt.BorderLayout as BL
-import java.awt.Color
 
 import javax.swing.JPanel
 
