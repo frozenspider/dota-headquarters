@@ -29,4 +29,9 @@ class HeroBaseStats {
 	BigDecimal agilGrowth
 	BigDecimal intlGrowth
 	Attribute  mainAttr
+
+	@Override
+	public String toString() {
+		return "HeroBaseStats ($title)"
+	}
 }

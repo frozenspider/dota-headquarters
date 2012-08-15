@@ -18,7 +18,7 @@ class HeroLevelStats {
 	
 	int damage
 	def armor	
-	public HeroLevelStats(def strnGrowth, def agilGrowth, def intlGrowth, Attribute mainAttr) {
+	public HeroLevelStats(Number strnGrowth, Number agilGrowth, Number intlGrowth, Attribute mainAttr) {
 		this.strnGrowth = strnGrowth
 		this.agilGrowth = agilGrowth
 		this.intlGrowth = intlGrowth
