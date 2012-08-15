@@ -1,6 +1,6 @@
-package org.dotahq.entity.hero.role;
+package org.dotahq.entity.hero.score;
 
-enum LaningRole {
+enum LaningScore {
 	/** Handling a lane against multiple opponents */
 	SOLO,
 	/** Holding a line with a single partner */
