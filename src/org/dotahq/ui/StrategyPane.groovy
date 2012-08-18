@@ -23,6 +23,9 @@ class StrategyPane extends JPanel {
 	public StrategyPane() {
 		this.heroes = [:]
 		this.setLayout(new BL())
+
+		int iconSize = 48
+
 		def content = (new SwingBuilder()).panel {
 			def border = {
 				lineBorder(color: Color.black)
@@ -42,19 +45,19 @@ class StrategyPane extends JPanel {
 					border: border()
 				) {
 					def rearrangeCallback = this.&panelsRearranged
-					shortLane = panel(new EntityContainerPanel("Short", 32, rearrangeCallback), border: border())
+					shortLane = panel(new EntityContainerPanel("Short", iconSize, rearrangeCallback), border: border())
 					shortLane.setPinPoint(60, 150)
-					midLane = panel(new EntityContainerPanel("Middle", 32, rearrangeCallback), border: border())
+					midLane = panel(new EntityContainerPanel("Middle", iconSize, rearrangeCallback), border: border())
 					midLane.setPinPoint(200, 260)
-					longLane = panel(new EntityContainerPanel("Long", 32, rearrangeCallback), border: border())
+					longLane = panel(new EntityContainerPanel("Long", iconSize, rearrangeCallback), border: border())
 					longLane.setPinPoint(400, 420)
-					roam = panel(new EntityContainerPanel("Roam", 32, rearrangeCallback), border: border())
+					roam = panel(new EntityContainerPanel("Roam", iconSize, rearrangeCallback), border: border())
 					roam.setPinPoint(310, 260)
-					jungle = panel(new EntityContainerPanel("Jungle", 32, rearrangeCallback), border: border())
+					jungle = panel(new EntityContainerPanel("Jungle", iconSize, rearrangeCallback), border: border())
 					jungle.setPinPoint(270, 360)
-					jungle2 = panel(new EntityContainerPanel("Enemy Jungle", 32, rearrangeCallback), border: border())
+					jungle2 = panel(new EntityContainerPanel("Enemy Jungle", iconSize, rearrangeCallback), border: border())
 					jungle2.setPinPoint(180, 100)
-					def trashCan = panel(new EntityContainerPanel("DROP TO REMOVE", 32, rearrangeCallback, true),
+					def trashCan = panel(new EntityContainerPanel("DROP TO REMOVE", iconSize, rearrangeCallback, true),
 						border: border())
 					trashCan.setBackground(Color.WHITE)
 					trashCan.setPinPoint(70, 420)

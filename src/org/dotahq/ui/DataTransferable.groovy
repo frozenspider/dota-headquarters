@@ -26,6 +26,7 @@ class DataTransferable implements Transferable {
 	}
 	
 	public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException {
+		println "getTransferData (data: $data, flavor: $flavor)"
 		if (flavor != DragAndDropUtil.createDataFlavor(data)) {
 			throw new UnsupportedFlavorException()
 		}

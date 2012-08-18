@@ -14,10 +14,10 @@ import org.dotahq.entity.hero.HeroBaseStats
 import org.dotahq.util.ImageUtil
 
 class TavernContentPane extends JPanel {
-	
-	private final List <EntityDragDropPanel> heroBaseIcons
-	private List <HeroBaseStats> heroBases
-	
+
+	private final List<EntityDragDropPanel> heroBaseIcons
+	private List<HeroBaseStats> heroBases
+
 	public TavernContentPane() {
 		this.heroBases = list()
 		this.heroBaseIcons = list()
@@ -30,15 +30,15 @@ class TavernContentPane extends JPanel {
 		}
 		this.add(content, BL.CENTER)
 
-        // FIXME TODO
-        setHeroList(Collections.nCopies(7, new HeroBaseStats()))
+		// FIXME
+		setHeroList(['Ancient Apparition', 'Admiral', 'Lord of Olympus', 'Necrolyte', 'Demon Witch', 'Butcher', 'Holy Knight'].collect {new HeroBaseStats(title: it)})
 	}
-	
-	void setHeroList(List <HeroBaseStats> heroBases){
-        assert heroBases.size() <= heroBaseIcons.size()
+
+	void setHeroList(List<HeroBaseStats> heroBases) {
+		assert heroBases.size() <= heroBaseIcons.size()
 		this.heroBases = heroBases
-        heroBaseIcons.eachWithIndex { el, idx ->
-            def heroBase = heroBases[idx]
+		heroBaseIcons.eachWithIndex { el, idx ->
+			def heroBase = heroBases[idx]
 			el.setData(heroBase, heroBase ? ImageUtil.getIconFor(heroBase) : ImageUtil.getEmptyIcon())
 		}
 	}

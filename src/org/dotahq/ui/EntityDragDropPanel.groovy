@@ -114,7 +114,10 @@ class EntityDragDropPanel extends ImageRenderingPanel {
 				return
 			}
 			try {
+				println "getTransferData call"
 				def (hero, caller) = dtde.getTransferable().getTransferData(flavor)
+				println "getTransferData call done"
+
 				boolean success = dropCallback(hero, caller)
 				dtde.dropComplete(success)
 				println "Drop ${success ? '' : 'un'}successful"

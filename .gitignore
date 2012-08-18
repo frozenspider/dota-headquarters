@@ -9,3 +9,4 @@ bin/*
 .settings/*
 *.iml
 stacktrace.log
+/playdota-parsing-result

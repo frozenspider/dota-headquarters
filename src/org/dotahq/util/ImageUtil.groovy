@@ -26,10 +26,13 @@ class ImageUtil {
 	}
 
 	static BufferedImage getIconFor(HeroBaseStats base) {
-		if (true) return getRandomIcon()
-		File targetFile = new File("${imagesDir}/heroes/${base.title}.png")
-		if (targetFile.exists()) {
-			BufferedImage image = ImageIO.read(targetFile)
+//		if (true) return getRandomIcon()
+
+		String noExtPath = "${imagesDir}/heroes/${base.title}"
+		def iconFiles = ["png", "gif", "jpg", "jpeg"].collect {new File("${noExtPath}.${it}") }
+		def iconFilesExist = iconFiles*.exists()
+		if (iconFilesExist.contains(true)) {
+			BufferedImage image = ImageIO.read(iconFiles[iconFilesExist.indexOf(true)])
 			assert image.width == iconDim
 			assert image.height == iconDim
 			return image
@@ -106,11 +109,12 @@ class ImageUtil {
 		// Use multi-step technique: start with original size, then
 		// scale down in multiple passes with drawImage()
 		// until the target size is reached
-		int w = img.getWidth();
-		int h = img.getHeight();
+		int w = img.getWidth()
+		int h = img.getHeight()
+		int imgType = BufferedImage.TYPE_INT_RGB // img.getType()
 
 		if (w == targetWidth && h == targetHeight) {
-			BufferedImage result = new BufferedImage(w, h, img.getType())
+			BufferedImage result = new BufferedImage(w, h, imgType)
 			img.copyData(result.getRaster())
 			return img
 		}
@@ -140,7 +144,7 @@ class ImageUtil {
 				}
 			}
 
-			final BufferedImage tmp = new BufferedImage(w, h, img.getType());
+			final BufferedImage tmp = new BufferedImage(w, h, imgType);
 			final Graphics2D g2 = tmp.createGraphics();
 			g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, hint);
 			g2.drawImage(ret, 0, 0, w, h, null);
