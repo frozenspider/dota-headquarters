@@ -9,5 +9,11 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/groovy-1.8.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate 3"/>
+	<classpathentry kind="lib" path="D:/Program Files/Java/_Libs/_Databases/SQLite/javasqlite/sqlite.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="D:/Program Files/Java/_Libs/_Databases/SQLite/javasqlite"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/Program Files/Java/_Libs/_Apache_Commons/commons-collections/commons-collections-3.2.1/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
