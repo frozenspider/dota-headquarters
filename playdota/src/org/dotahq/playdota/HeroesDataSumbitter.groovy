@@ -6,13 +6,11 @@
 
 package org.dotahq.playdota
 
-import groovy.io.FileType
-import org.dotahq.entity.Side
+import static org.dotahq.playdota.ScriptPath.folder
+
 import org.dotahq.entity.hero.HeroBaseStats
 import org.dotahq.entity.hero.tavern.Tavern
-import org.hibernate.cfg.AnnotationConfiguration
-
-import static org.dotahq.playdota.ScriptPath.folder
+import org.hibernate.cfg.Configuration
 
 File tavernsFile = new File("serializedHeroData", folder)
 if (!tavernsFile.exists()) {
@@ -58,7 +56,7 @@ def hibProps = [
 
 
 def configureHibernate(props) {
-	def config = new AnnotationConfiguration()
+	def config = new Configuration()
 	props.each { k, v -> config.setProperty(k, v) }
 	config.addAnnotatedClass(Tavern)
 	config.addAnnotatedClass(HeroBaseStats)

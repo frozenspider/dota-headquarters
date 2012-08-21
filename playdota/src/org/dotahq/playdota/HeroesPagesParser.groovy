@@ -6,14 +6,13 @@
 
 package org.dotahq.playdota
 
-import org.dotahq.entity.hero.tavern.Tavern
-import org.dotahq.entity.hero.HeroBaseStats
-import groovy.io.FileType
-import org.hibernate.cfg.AnnotationConfiguration
-
 import static org.dotahq.playdota.ScriptPath.folder
-import org.dotahq.entity.Side
+import groovy.io.FileType
+
 import org.dotahq.entity.Attribute
+import org.dotahq.entity.Side
+import org.dotahq.entity.hero.HeroBaseStats
+import org.dotahq.entity.hero.tavern.Tavern
 
 File heroesDataFile = new File("serializedHeroData", folder)
 if (heroesDataFile.exists()) {
@@ -22,6 +21,7 @@ if (heroesDataFile.exists()) {
 
 def tavernList = []
 folder.eachFile(FileType.DIRECTORIES) { File dir ->
+	if (dir.name == 'images') return
 	final String tavernName = dir.getName()[3..-1]
 	final Side side
 	if (tavernName.startsWith("Sentinel")) {
