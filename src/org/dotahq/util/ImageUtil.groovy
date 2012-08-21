@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import java.awt.RenderingHints
 import java.awt.Graphics2D
+import org.dotahq.entity.hero.Hero
 
 class ImageUtil {
 	private static final String imagesDir = 'images'
@@ -25,9 +26,11 @@ class ImageUtil {
 		}
 	}
 
-	static BufferedImage getIconFor(HeroBaseStats base) {
-//		if (true) return getRandomIcon()
+	static BufferedImage getIconFor(Hero hero) {
+		return getIconFor(hero.base)
+	}
 
+	static BufferedImage getIconFor(HeroBaseStats base) {
 		String noExtPath = "${imagesDir}/heroes/${base.title}"
 		def iconFiles = ["png", "gif", "jpg", "jpeg"].collect {new File("${noExtPath}.${it}") }
 		def iconFilesExist = iconFiles*.exists()
@@ -44,7 +47,7 @@ class ImageUtil {
 	static BufferedImage getMapImage() {
 		File targetFile = new File("${imagesDir}/map.png")
 		if (!targetFile.exists()) {
-			throw new FileNotFoundException(targetFile)
+			throw new FileNotFoundException(targetFile.getCanonicalPath())
 		}
 		BufferedImage image = ImageIO.read(targetFile)
 		return image

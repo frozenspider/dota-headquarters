@@ -11,10 +11,10 @@ package org.hibernate.dialect;
 
 import java.sql.Types;
 
-import org.hibernate.dialect.function.StandardSQLFunction;
 import org.hibernate.dialect.function.SQLFunctionTemplate;
+import org.hibernate.dialect.function.StandardSQLFunction;
 import org.hibernate.dialect.function.VarArgsSQLFunction;
-import org.hibernate.Hibernate;
+import org.hibernate.type.StandardBasicTypes;
 
 public class SQLiteDialect extends Dialect {
 	public SQLiteDialect() {
@@ -42,10 +42,10 @@ public class SQLiteDialect extends Dialect {
 		registerColumnType(Types.CLOB, "clob");
 		registerColumnType(Types.BOOLEAN, "integer");
 
-		registerFunction( "concat", new VarArgsSQLFunction(Hibernate.STRING, "", "||", "") );
-		registerFunction( "mod", new SQLFunctionTemplate( Hibernate.INTEGER, "?1 % ?2" ) );
-		registerFunction( "substr", new StandardSQLFunction("substr", Hibernate.STRING) );
-		registerFunction( "substring", new StandardSQLFunction( "substr", Hibernate.STRING ) );
+		registerFunction( "concat", new VarArgsSQLFunction(StandardBasicTypes.STRING, "", "||", "") );
+		registerFunction( "mod", new SQLFunctionTemplate(StandardBasicTypes.INTEGER, "?1 % ?2" ) );
+		registerFunction( "substr", new StandardSQLFunction("substr", StandardBasicTypes.STRING) );
+		registerFunction( "substring", new StandardSQLFunction("substr", StandardBasicTypes.STRING ) );
 	}
 
 	public boolean supportsIdentityColumns() {
