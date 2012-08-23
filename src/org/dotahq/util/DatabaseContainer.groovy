@@ -9,7 +9,7 @@ import org.hibernate.cfg.Configuration
 
 class DatabaseContainer {
 	
-	private final List<Tavern> taverns
+	final List<Tavern> taverns
 	
 	public DatabaseContainer() {
 		String dbpath = "data/database"

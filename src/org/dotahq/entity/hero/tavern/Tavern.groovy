@@ -36,6 +36,6 @@ class Tavern implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Tavern ($name)"
+		return name
 	}
 }

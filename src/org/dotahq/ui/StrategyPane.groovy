@@ -21,7 +21,7 @@ class StrategyPane extends JPanel {
 	private final Map<LP, EntityContainerPanel> positionToPanelMap
 	private final Map<HeroBaseStats, LP> heroes
 
-	public StrategyPane() {
+	public StrategyPane(DatabaseContainer databaseContainer) {
 		this.heroes = [:]
 		this.setLayout(new BL())
 
@@ -35,7 +35,7 @@ class StrategyPane extends JPanel {
 			def topPanel = panel(constraints: BL.NORTH, border: border()) {
 				borderLayout()
 				def heroesPanel = panel(new TavernContentPane(), constraints: BL.EAST, border: border())
-				def tavernsPanel = panel(new TavernPane(), constraints: BL.CENTER, border: border())
+				def tavernsPanel = panel(new TavernPane(databaseContainer.taverns, heroesPanel), constraints: BL.CENTER, border: border())
 			}
 			def centerPanel = panel(constraints: BL.CENTER, border: border()) {
 				borderLayout()
@@ -125,7 +125,7 @@ class StrategyPane extends JPanel {
 	}
 
 	public static void main(String[] args) {
-		new DatabaseContainer()
+		def dbc = new DatabaseContainer()
 		new SwingBuilder().frame(
 			title: "Strategy Pane Demo",
 			size: [640, 750],
@@ -133,7 +133,7 @@ class StrategyPane extends JPanel {
 			defaultCloseOperation: WindowConstants.DISPOSE_ON_CLOSE,
 			show: true,
 			layout: new BL()) {
-			widget(new StrategyPane(), constraints: BL.CENTER)
+			widget(new StrategyPane(dbc), constraints: BL.CENTER)
 		}
 	}
 }
