@@ -6,5 +6,5 @@ package org.dotahq.entity;
  * @author FS
  */
 public enum Side {
-	SENTINEL, SCOURGE, NEUTRAL
+	SENTINEL, SCOURGE
 }

@@ -9,6 +9,7 @@ import javax.swing.JPanel
 import javax.swing.JTextPane
 
 import javax.swing.WindowConstants
+import org.dotahq.util.DatabaseContainer
 import org.dotahq.util.ImageUtil
 import org.dotahq.entity.hero.strategy.LanePosition as LP
 import org.dotahq.entity.hero.HeroBaseStats
@@ -20,7 +21,7 @@ class StrategyPane extends JPanel {
 	private final Map<LP, EntityContainerPanel> positionToPanelMap
 	private final Map<HeroBaseStats, LP> heroes
 
-	public StrategyPane() {
+	public StrategyPane(DatabaseContainer databaseContainer) {
 		this.heroes = [:]
 		this.setLayout(new BL())
 
@@ -31,10 +32,10 @@ class StrategyPane extends JPanel {
 				lineBorder(color: Color.black)
 			}
 			borderLayout()
-			def topPanel = panel(constraints: BL.NORTH, border: border()) {
+			def topPanel = panel(constraints: BL.NORTH) {
 				borderLayout()
-				def heroesPanel = panel(new TavernContentPane(), constraints: BL.EAST, border: border())
-				def tavernsPanel = panel(new TavernPane(), constraints: BL.CENTER, border: border())
+				def heroesPanel = panel(new TavernContentPane(), constraints: BL.EAST)
+				def tavernsPanel = panel(new TavernPane(databaseContainer.taverns, heroesPanel), constraints: BL.CENTER)
 			}
 			def centerPanel = panel(constraints: BL.CENTER, border: border()) {
 				borderLayout()
@@ -46,7 +47,7 @@ class StrategyPane extends JPanel {
 				) {
 					def rearrangeCallback = this.&panelsRearranged
 					shortLane = panel(new EntityContainerPanel("Short", iconSize, rearrangeCallback), border: border())
-					shortLane.setPinPoint(60, 150)
+					shortLane.setPinPoint(80, 150)
 					midLane = panel(new EntityContainerPanel("Middle", iconSize, rearrangeCallback), border: border())
 					midLane.setPinPoint(200, 260)
 					longLane = panel(new EntityContainerPanel("Long", iconSize, rearrangeCallback), border: border())
@@ -56,7 +57,7 @@ class StrategyPane extends JPanel {
 					jungle = panel(new EntityContainerPanel("Jungle", iconSize, rearrangeCallback), border: border())
 					jungle.setPinPoint(270, 360)
 					jungle2 = panel(new EntityContainerPanel("Enemy Jungle", iconSize, rearrangeCallback), border: border())
-					jungle2.setPinPoint(180, 100)
+					jungle2.setPinPoint(200, 100)
 					def trashCan = panel(new EntityContainerPanel("DROP TO REMOVE", iconSize, rearrangeCallback, true),
 						border: border())
 					trashCan.setBackground(Color.WHITE)
@@ -89,25 +90,37 @@ class StrategyPane extends JPanel {
 
 	/**
 	 * Called from entity panels when their content is rearranged.
-	 * @param draggedAway dragged away hero
-	 * @param dragAwayUnawareContainer a container, from which the element was dragged and which doesn't
-	 * yet know about it (can be null)
+	 * 
+	 * @param draggedAway 
+	 * 				dragged away hero
+	 * @param dragAwayUnawareContainer
+	 * 				a container, from which the element was dragged
+	 * 				and which doesn't yet know about it (can be null)
+	 * 
 	 * @return whether or not current layout is admissible (if not, changes will be reverted)
 	 */
 	private boolean panelsRearranged(HeroBaseStats draggedAway, JPanel dragAwayUnawareContainer) {
-		println "StrategyPane.panelsRearranged()"
-		heroes.clear()
+		def backup = this.heroes
+		def revert = {
+			this.heroes.clear()
+			this.heroes << backup
+			return false
+		}
+		this.heroes.clear()
 		for (e in positionToPanelMap) {
 			def refinedValues = e.value.is(dragAwayUnawareContainer) ? e.value.data - draggedAway : e.value.data
 			for (hero in refinedValues) {
-				if (heroes.containsKey(hero)) {
+				if (this.heroes.containsKey(hero)) {
 					// TODO: Notify user, that duplicates are not allowed
-					return false
+					return revert()
 				}
-				heroes << [(hero): e.key]
+				this.heroes << [(hero): e.key]
 			}
 		}
-		println heroes
+		if (heroes.size() > 5) {
+			return revert()
+		}
+		println this.heroes
 		return true
 	}
 
@@ -124,6 +137,7 @@ class StrategyPane extends JPanel {
 	}
 
 	public static void main(String[] args) {
+		def dbc = new DatabaseContainer()
 		new SwingBuilder().frame(
 			title: "Strategy Pane Demo",
 			size: [640, 750],
@@ -131,7 +145,7 @@ class StrategyPane extends JPanel {
 			defaultCloseOperation: WindowConstants.DISPOSE_ON_CLOSE,
 			show: true,
 			layout: new BL()) {
-			widget(new StrategyPane(), constraints: BL.CENTER)
+			widget(new StrategyPane(dbc), constraints: BL.CENTER)
 		}
 	}
 }

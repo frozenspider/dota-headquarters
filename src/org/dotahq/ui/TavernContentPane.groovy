@@ -19,19 +19,16 @@ class TavernContentPane extends JPanel {
 	private List<HeroBaseStats> heroBases
 
 	public TavernContentPane() {
-		this.heroBases = list()
-		this.heroBaseIcons = list()
+		this.heroBases = asList()
+		this.heroBaseIcons = asList()
 		this.setLayout(new BL())
-		def content = (new SwingBuilder()).panel(preferredSize: list(iconDim * 4, iconDim * 3)) {
+		def content = (new SwingBuilder()).panel(preferredSize: asList(iconDim * 4, iconDim * 3)) {
 			gridLayout(cols: 4, rows: 3)
 			12.times {
 				heroBaseIcons << widget(new EntityDragDropPanel().allowDrag(true), border: lineBorder(color: Color.black))
 			}
 		}
 		this.add(content, BL.CENTER)
-
-		// FIXME
-		setHeroList(['Ancient Apparition', 'Admiral', 'Lord of Olympus', 'Necrolyte', 'Demon Witch', 'Butcher', 'Holy Knight'].collect {new HeroBaseStats(title: it)})
 	}
 
 	void setHeroList(List<HeroBaseStats> heroBases) {
@@ -41,5 +38,6 @@ class TavernContentPane extends JPanel {
 			def heroBase = heroBases[idx]
 			el.setData(heroBase, heroBase ? ImageUtil.getIconFor(heroBase) : ImageUtil.getEmptyIcon())
 		}
+		repaint()
 	}
 }

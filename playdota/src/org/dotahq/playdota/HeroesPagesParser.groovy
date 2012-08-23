@@ -14,6 +14,22 @@ import org.dotahq.entity.Side
 import org.dotahq.entity.hero.HeroBaseStats
 import org.dotahq.entity.hero.tavern.Tavern
 
+
+
+
+// ====================
+// === VERSION HERE ===
+// ====================
+
+final String VERSION = "6.74c"
+
+// ====================
+// === VERSION HERE ===
+// ====================
+
+
+
+
 File heroesDataFile = new File("serializedHeroData", folder)
 if (heroesDataFile.exists()) {
 	throw new IllegalStateException("\"${heroesDataFile.getAbsolutePath()}\" already exist. Are we already done here?")
@@ -101,7 +117,8 @@ folder.eachFile(FileType.DIRECTORIES) { File dir ->
 			strnGrowth: strnGrowth,
 			agilGrowth: agilGrowth,
 			intlGrowth: intlGrowth,
-			mainAttr: mainAttr
+			mainAttr: mainAttr,
+			version: VERSION
 		)
 		tavern.heroBases << heroBase
 		println "${heroName}, the ${heroTitle}"
