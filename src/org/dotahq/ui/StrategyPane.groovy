@@ -9,6 +9,7 @@ import javax.swing.JPanel
 import javax.swing.JTextPane
 
 import javax.swing.WindowConstants
+import org.dotahq.util.DatabaseContainer
 import org.dotahq.util.ImageUtil
 import org.dotahq.entity.hero.strategy.LanePosition as LP
 import org.dotahq.entity.hero.HeroBaseStats
@@ -124,6 +125,7 @@ class StrategyPane extends JPanel {
 	}
 
 	public static void main(String[] args) {
+		new DatabaseContainer()
 		new SwingBuilder().frame(
 			title: "Strategy Pane Demo",
 			size: [640, 750],
