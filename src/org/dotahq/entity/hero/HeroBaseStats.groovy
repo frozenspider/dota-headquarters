@@ -47,6 +47,9 @@ class HeroBaseStats implements Serializable {
 	@Column(name = "intl_growth") BigDecimal intlGrowth
 	@Column(name = "main_attr") Attribute mainAttr
 
+	
+	String version
+	
 	@Override
 	public String toString() {
 		return "HeroBaseStats ($title)"
