@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage
 
 import javax.swing.JPanel
 
+import org.dotahq.entity.StrategyLayout
 import org.dotahq.entity.hero.HeroBaseStats
 import org.dotahq.entity.hero.strategy.LanePosition as LP
 
@@ -15,11 +16,11 @@ class StrategyLayoutPanel extends JPanel {
 	
 	private EntityContainerPanel shortLane, midLane, longLane, roam, jungle, jungle2
 	private final Map<LP, EntityContainerPanel> positionToPanelMap
-	private final Map<HeroBaseStats, LP> heroes
+	private final StrategyLayout strategy
 	
 	public StrategyLayoutPanel(BufferedImage mapImage){
 		int iconSize = 48
-		this.heroes = [:]
+		this.strategy = new StrategyLayout()
 		
 		this.setLayout(new BL())
 		def content = (new SwingBuilder()).panel(
@@ -72,43 +73,43 @@ class StrategyLayoutPanel extends JPanel {
 	 * @return whether or not current layout is admissible (if not, changes will be reverted)
 	 */
 	private boolean panelsRearranged(HeroBaseStats draggedAway, JPanel dragAwayUnawareContainer) {
-		def backup = this.heroes
+		def backup = strategy.copy()
 		def revert = {
-			this.heroes.clear()
-			this.heroes << backup
+			this.strategy.clear()
+			this.strategy.setTo(backup)
 			return false
 		}
-		this.heroes.clear()
+		this.strategy.clear()
 		for (e in positionToPanelMap) {
 			def refinedValues = e.value.is(dragAwayUnawareContainer) ? e.value.data - draggedAway : e.value.data
 			for (hero in refinedValues) {
-				if (this.heroes.containsKey(hero)) {
+				if (this.strategy.containsHero(hero)) {
 					// TODO: Notify user, that duplicates are not allowed
 					return revert()
 				}
-				this.heroes << [(hero): e.key]
+				this.strategy.putIfNew(hero, e.key)
 			}
 		}
-		if (heroes.size() > 5) {
+		if (strategy.size() > 5) {
 			return revert()
 		}
-		println this.heroes
+		println this.strategy
 		return true
 	}
 	
-	public boolean setStrategy(Map <HeroBaseStats, LP> heroes){
-		def backup = this.heroes
-		this.heroes.clear()
-		this.heroes << heroes
+	public boolean setStrategy(StrategyLayout strategy){
+		def backup = strategy.copy()
+		this.strategy.clear()
+		this.strategy.setTo(strategy)
 		if (!panelsRearranged(null, null)){
-			this.heroes.clear()
-			this.heroes << backup
+			this.strategy.clear()
+			this.strategy.setTo(backup)
 			return false
 		}
 		return true
 	}
 	
-	public Map <HeroBaseStats, LP> getStrategy(){
-		return [:] << this.heroes
+	public StrategyLayout getStrategy(){
+		return strategy.copy()
 	}
 }

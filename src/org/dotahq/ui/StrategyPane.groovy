@@ -4,6 +4,7 @@ import groovy.swing.SwingBuilder
 
 import java.awt.BorderLayout as BL
 import java.awt.Color
+import java.awt.FlowLayout
 
 import javax.swing.JPanel
 import javax.swing.JTextPane
@@ -26,6 +27,11 @@ class StrategyPane extends JPanel {
 			borderLayout()
 			def topPanel = panel(constraints: BL.NORTH) {
 				borderLayout()
+				def ctrlPanel = panel(constraints: BL.NORTH){
+					flowLayout(alignment: FlowLayout.LEFT)
+					button(text: "Save")
+					button(text: "Load")
+				}
 				def heroesPanel = panel(new TavernContentPane(), constraints: BL.EAST)
 				def tavernsPanel = panel(
 					new TavernPane(databaseContainer.taverns, heroesPanel),
