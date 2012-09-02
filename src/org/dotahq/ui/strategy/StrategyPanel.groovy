@@ -21,6 +21,7 @@ import org.dotahq.util.DatabaseContainer
 import org.dotahq.util.DisplayUtils
 import org.dotahq.util.FileSysUtil
 import org.dotahq.util.ImageUtil
+import org.dotahq.util.Version;
 
 class StrategyPanel extends JPanel {
 	
@@ -125,7 +126,7 @@ class StrategyPanel extends JPanel {
 		def dbc = new DatabaseContainer()
 		def saveLoad = new StrategySaveLoad()
 		new SwingBuilder().frame(
-			title: "Strategy Pane Demo",
+			title: "DotA Headquarters v${Version.VER} (Strategy Pane Demo)",
 			size: [640, 750],
 			locationRelativeTo: null,
 			defaultCloseOperation: WindowConstants.DISPOSE_ON_CLOSE,
