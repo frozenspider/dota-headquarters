@@ -11,5 +11,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate 3"/>
 	<classpathentry kind="lib" path="D:/Program Files/Java/_Libs/_Apache_Commons/commons-collections/commons-collections-3.2.1/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="lib" path="D:/Program Files/Java/_Libs/_Databases/H2/h2-2012-07-13/bin/h2-1.3.168.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files/Java/_Libs/XStream/xstream-1.4.3/lib/xstream-1.4.3.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files/Java/_Libs/XStream/xstream-1.4.3/lib/xstream/xmlpull-1.1.3.1.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files/Java/_Libs/XStream/xstream-1.4.3/lib/xstream/xpp3_min-1.1.4c.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

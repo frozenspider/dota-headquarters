@@ -73,40 +73,46 @@ class StrategyLayoutPanel extends JPanel {
 	 * @return whether or not current layout is admissible (if not, changes will be reverted)
 	 */
 	private boolean panelsRearranged(HeroBaseStats draggedAway, JPanel dragAwayUnawareContainer) {
-		def backup = strategy.copy()
-		def revert = {
-			this.strategy.clear()
-			this.strategy.setTo(backup)
-			return false
-		}
-		this.strategy.clear()
+		StrategyLayout strategy = new StrategyLayout()
 		for (e in positionToPanelMap) {
 			def refinedValues = e.value.is(dragAwayUnawareContainer) ? e.value.data - draggedAway : e.value.data
 			for (hero in refinedValues) {
-				if (this.strategy.containsHero(hero)) {
+				if (strategy.containsHero(hero)) {
 					// TODO: Notify user, that duplicates are not allowed
-					return revert()
+					return false
 				}
-				this.strategy.putIfNew(hero, e.key)
+				strategy.putIfNew(hero, e.key)
 			}
 		}
-		if (strategy.size() > 5) {
-			return revert()
+		if (!validateStrategy(strategy)) {
+			return false
 		}
+		this.strategy.setTo(strategy)
 		println this.strategy
 		return true
 	}
 	
+	private boolean validateStrategy(StrategyLayout strategy) {
+		return strategy.size() <= 5
+	}
+	
 	public boolean setStrategy(StrategyLayout strategy){
-		def backup = strategy.copy()
-		this.strategy.clear()
-		this.strategy.setTo(strategy)
-		if (!panelsRearranged(null, null)){
-			this.strategy.clear()
-			this.strategy.setTo(backup)
+		if (validateStrategy(strategy)){
+			this.strategy.setTo(strategy)
+			Map <LP, List <HeroBaseStats>> laneHeroes = [:]
+			for (e in strategy.heroesToLanesMap()) {
+				if (!laneHeroes.containsKey(e.value)) {
+					laneHeroes << [(e.value): []]
+				}
+				laneHeroes[e.value] << e.key
+			}
+			for (e in positionToPanelMap) {
+				e.value.setData(laneHeroes[e.key])
+			}
+			return true
+		} else {
 			return false
 		}
-		return true
 	}
 	
 	public StrategyLayout getStrategy(){
