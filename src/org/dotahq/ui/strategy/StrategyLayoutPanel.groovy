@@ -78,10 +78,9 @@ class StrategyLayoutPanel extends JPanel {
 			def refinedValues = e.value.is(dragAwayUnawareContainer) ? e.value.data - draggedAway : e.value.data
 			for (hero in refinedValues) {
 				if (strategy.containsHero(hero)) {
-					// TODO: Notify user, that duplicates are not allowed
 					return false
 				}
-				strategy.putIfNew(hero, e.key)
+				strategy.put(hero, e.key)
 			}
 		}
 		if (!validateStrategy(strategy)) {

@@ -111,7 +111,7 @@ class StrategyPanel extends JPanel {
 		for (heroToLane in strategy.heroesToLanesMap()) {
 			HeroBaseStats heroBase = databaseContainer.update(heroToLane.key)
 			if (heroBase) {
-				synched.putIfNew(heroBase, heroToLane.value)
+				synched.put(heroBase, heroToLane.value)
 			} else {
 				String msg = "Failed to update hero ${heroBase.title} on lane ${heroToLane.value}."
 					+ " Please add manually."

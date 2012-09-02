@@ -35,10 +35,8 @@ class StrategyLayout {
 		return this.heroes.containsKey(hero)
 	}
 	
-	StrategyLayout putIfNew(HeroBaseStats hero, LP lane) {
-		if (!this.heroes.containsKey(hero)) {
-			this.heroes.put(hero, lane)
-		}
+	StrategyLayout put(HeroBaseStats hero, LP lane) {
+		this.heroes.put(hero, lane)
 		return this
 	}
 	
