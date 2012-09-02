@@ -67,6 +67,7 @@ class EntityContainerPanel extends EntityDragDropPanel {
 			panels.remove(panel)
 			refreshPanels()
 		}
+		panel.setToolTipText(hero.title)
 		panel.allowDrag(false, dragCallback)
 	}
 	
