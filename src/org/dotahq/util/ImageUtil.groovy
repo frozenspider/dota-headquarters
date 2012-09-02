@@ -10,12 +10,12 @@ import java.awt.Graphics2D
 import org.dotahq.entity.hero.Hero
 
 class ImageUtil {
-	private static final String imagesDir = 'images'
+	
 	static final int iconDim = 64
-	static final BufferedImage emptyIcon = loadImageByPath("${imagesDir}/icon_empty.png")
+	static final BufferedImage emptyIcon = loadImageByPath(FileSysUtil.imagesDir, "icon_empty.png")
 
-	private static BufferedImage loadImageByPath(String path) {
-		File targetFile = new File("$path")
+	private static BufferedImage loadImageByPath(File dir, String filename) {
+		File targetFile = new File(dir, filename)
 		if (targetFile.exists()) {
 			BufferedImage image = ImageIO.read(targetFile)
 			assert image.width == iconDim
@@ -31,8 +31,8 @@ class ImageUtil {
 	}
 
 	static BufferedImage getIconFor(HeroBaseStats base) {
-		String noExtPath = "${imagesDir}/heroes/${base.title}"
-		def iconFiles = ["png", "gif", "jpg", "jpeg"].collect {new File("${noExtPath}.${it}") }
+		File folder = FileSysUtil.imagesHeroesDir
+		def iconFiles = ["png", "gif", "jpg", "jpeg"].collect {new File(folder, "${base.title}.${it}") }
 		def iconFilesExist = iconFiles*.exists()
 		if (iconFilesExist.contains(true)) {
 			BufferedImage image = ImageIO.read(iconFiles[iconFilesExist.indexOf(true)])
@@ -45,7 +45,7 @@ class ImageUtil {
 	}
 
 	static BufferedImage getMapImage() {
-		File targetFile = new File("${imagesDir}/map.png")
+		File targetFile = new File(FileSysUtil.imagesDir, "map.png")
 		if (!targetFile.exists()) {
 			throw new FileNotFoundException(targetFile.getCanonicalPath())
 		}

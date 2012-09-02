@@ -12,12 +12,14 @@ class DatabaseContainer {
 	final List<Tavern> taverns
 	
 	public DatabaseContainer() {
-		String dbpath = "data/database"
-		if (!new File("${dbpath}.h2.db").exists()) {
-			throw new FileNotFoundException("${dbpath}.h2.db")
+		File dbDir = FileSysUtil.databaseDir
+		File dbFile = new File(dbDir, "database.h2.db")
+		File dbFilePathNoExt = new File(dbDir, "database")
+		if (!dbFile.exists()) {
+			throw new FileNotFoundException(dbFile.getName())
 		}
 		
-		def dbUrlStr = "jdbc:h2:/${new File(dbpath).getAbsolutePath().replace('\\', '/')}"
+		def dbUrlStr = "jdbc:h2:/${dbFilePathNoExt.getAbsolutePath().replace('\\', '/')}"
 		def hibProps = [
 					"hibernate.dialect": "org.hibernate.dialect.H2Dialect",
 					"hibernate.connection.driver_class": "org.h2.Driver", //"SQLite.JDBCDriver",
