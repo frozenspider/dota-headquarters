@@ -10,3 +10,4 @@ bin/*
 *.iml
 stacktrace.log
 /playdota-parsing-result
+/saves

@@ -1,4 +1,4 @@
-package org.dotahq.ui
+package org.dotahq.ui.strategy
 
 import static java.util.Collections.*
 
@@ -32,21 +32,7 @@ class EntityContainerPanel extends EntityDragDropPanel {
 				return true
 			}
 			if (panels.contains(caller) || panels.size() >= 5) return false
-			def panel = new EntityDragDropPanel().setData(
-				hero,
-				ImageUtil.scaledCopy(
-					ImageUtil.getIconFor(hero),
-					iconDim,
-					iconDim
-				)
-			)
-			panels << panel
-			def dragCallback = { DragSourceDropEvent dsde ->
-				if (!dsde.getDropSuccess()) return
-				panels.remove(panel)
-				refreshPanels()
-			}
-			panel.allowDrag(false, dragCallback)
+			addPanelFor(hero)
 			boolean layoutIsAdmissible = dropAction(hero, callerContainer)
 			if (layoutIsAdmissible) {
 				refreshPanels()
@@ -61,12 +47,29 @@ class EntityContainerPanel extends EntityDragDropPanel {
 		this.setImage(null)
 		this.setLayout(new GridBagLayout())
 		this.setOpaque(false)
-//		this.setBackground(new Color(background.red, background.green, background.blue, 150))
 		this.setBackground(new Color(255, 255, 255, 128))
 		allowDrop([HeroBaseStats.class], dropCallback)
 		SwingUtilities.invokeLater({refreshPanels()})
 	}
 
+	private void addPanelFor(HeroBaseStats hero) {
+		def panel = new EntityDragDropPanel().setData(
+			hero,
+			ImageUtil.scaledCopy(
+				ImageUtil.getIconFor(hero),
+				iconDim,
+				iconDim
+			)
+		)
+		panels << panel
+		def dragCallback = { DragSourceDropEvent dsde ->
+			if (!dsde.getDropSuccess()) return
+			panels.remove(panel)
+			refreshPanels()
+		}
+		panel.allowDrag(false, dragCallback)
+	}
+	
 	@Override
 	void paintComponent(Graphics g) {
 		// Ensure component background is applied
@@ -75,11 +78,20 @@ class EntityContainerPanel extends EntityDragDropPanel {
 		super.paintComponent(g)
 	}
 
-
 	List<HeroBaseStats> getData() {
 		return panels.collect { it.getData() }
 	}
-
+	
+	void setData(List<HeroBaseStats> heroBaseStats) {
+		panels.clear()
+		for (HeroBaseStats heroBase in heroBaseStats) {
+			addPanelFor(heroBase)
+		}
+		SwingUtilities.invokeLater({
+			refreshPanels()
+		})
+	}
+	
 	EntityContainerPanel setPinPoint(List<Integer> pinPoint) {
 		setPinPoint(pinPoint[0], pinPoint[1])
 	}

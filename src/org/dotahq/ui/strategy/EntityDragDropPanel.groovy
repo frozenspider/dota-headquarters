@@ -1,4 +1,4 @@
-package org.dotahq.ui
+package org.dotahq.ui.strategy
 
 import static org.dotahq.util.ImageUtil.*
 

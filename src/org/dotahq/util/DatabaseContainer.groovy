@@ -59,4 +59,45 @@ class DatabaseContainer {
 			factory.close()
 		}
 	}
+	
+	public HeroBaseStats update(HeroBaseStats unsynched){
+		HeroBaseStats current
+		
+		// Try #1: find by title
+		current = findByTitle(unsynched.title)
+		if (current) {
+			return current
+		}
+		
+		// Try #2: if fails, find by name
+		current = findByName(unsynched.name)
+		if (current) {
+			return current
+		}
+		
+		// Failed
+		return null
+	}
+	
+	private HeroBaseStats findByName(String name) {
+		for (tavern in taverns) {
+			for (heroBase in tavern.heroBases) {
+				if (heroBase.name == name) {
+					return heroBase
+				}
+			}
+		}
+		return null
+	}
+	
+	private HeroBaseStats findByTitle(String title) {
+		for (tavern in taverns) {
+			for (heroBase in tavern.heroBases) {
+				if (heroBase.title == title) {
+					return heroBase
+				}
+			}
+		}
+		return null
+	}
 }
