@@ -95,23 +95,23 @@ class StrategyLayoutPanel extends JPanel {
 		return strategy.size() <= 5
 	}
 	
+	
 	public boolean setStrategy(StrategyLayout strategy){
-		if (validateStrategy(strategy)){
-			this.strategy.setTo(strategy)
-			Map <LP, List <HeroBaseStats>> laneHeroes = [:]
-			for (e in strategy.heroesToLanesMap()) {
-				if (!laneHeroes.containsKey(e.value)) {
-					laneHeroes << [(e.value): []]
-				}
-				laneHeroes[e.value] << e.key
-			}
-			for (e in positionToPanelMap) {
-				e.value.setData(laneHeroes[e.key])
-			}
-			return true
-		} else {
+		if (!validateStrategy(strategy)){
 			return false
 		}
+		this.strategy.setTo(strategy)
+		Map <LP, List <HeroBaseStats>> laneHeroes = [:]
+		for (e in strategy.heroesToLanesMap()) {
+			if (!laneHeroes.containsKey(e.value)) {
+				laneHeroes << [(e.value): []]
+			}
+			laneHeroes[e.value] << e.key
+		}
+		for (e in positionToPanelMap) {
+			e.value.setData(laneHeroes[e.key])
+		}
+		return true
 	}
 	
 	public StrategyLayout getStrategy(){
