@@ -15,13 +15,13 @@ import javax.swing.event.ListSelectionListener as LSL
 import org.dotahq.entity.Side
 import org.dotahq.entity.hero.tavern.Tavern
 
-class TavernPane extends JPanel{
+class TavernPanel extends JPanel{
 	
 	private static final int perTavern = 12
 	
 	private final TavernContentPane	tavernContentPane
 	
-	public TavernPane(List <Tavern> taverns, TavernContentPane tavernContentPane) {
+	public TavernPanel(List <Tavern> taverns, TavernContentPane tavernContentPane) {
 		List <Tavern> sentTaverns = new ArrayList()
 		List <Tavern> scrgTaverns = new ArrayList()
 		def addTavern = { Tavern tavern ->

@@ -22,14 +22,14 @@ import org.dotahq.util.DisplayUtils
 import org.dotahq.util.FileSysUtil
 import org.dotahq.util.ImageUtil
 
-class StrategyPane extends JPanel {
+class StrategyPanel extends JPanel {
 	
 	private final DatabaseContainer		databaseContainer;	private final StrategySaveLoad		saveLoad
 	
 	private JTextPane 					commentTextPane
 	private StrategyLayoutPanel 		stratLayoutPanel
 	
-	public StrategyPane(DatabaseContainer databaseContainer, StrategySaveLoad saveLoad) {
+	public StrategyPanel(DatabaseContainer databaseContainer, StrategySaveLoad saveLoad) {
 		this.databaseContainer =  databaseContainer;
 		this.saveLoad = saveLoad;
 		this.setLayout(new BL())
@@ -48,7 +48,7 @@ class StrategyPane extends JPanel {
 				}
 				def heroesPanel = panel(new TavernContentPane(), constraints: BL.EAST)
 				def tavernsPanel = panel(
-				new TavernPane(databaseContainer.taverns, heroesPanel), constraints: BL.CENTER)
+				new TavernPanel(databaseContainer.taverns, heroesPanel), constraints: BL.CENTER)
 			}
 			def centerPanel = panel(constraints: BL.CENTER, border: border()) {
 				borderLayout()
@@ -131,7 +131,7 @@ class StrategyPane extends JPanel {
 			defaultCloseOperation: WindowConstants.DISPOSE_ON_CLOSE,
 			show: true,
 			layout: new BL()) {
-				widget(new StrategyPane(dbc, saveLoad), constraints: BL.CENTER)
+				widget(new StrategyPanel(dbc, saveLoad), constraints: BL.CENTER)
 		}
 	}
 }
