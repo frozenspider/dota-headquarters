@@ -1,0 +1,13 @@
+*~
+.~lock*
+target/*
+out/*
+bin/*
+.classpath
+.idea/*
+.project
+.settings/*
+*.iml
+stacktrace.log
+/playdota-parsing-result
+/saves

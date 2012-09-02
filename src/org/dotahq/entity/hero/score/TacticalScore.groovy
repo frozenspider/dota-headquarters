@@ -1,6 +1,6 @@
-package org.dotahq.entity.hero.role;
+package org.dotahq.entity.hero.score;
 
-enum TacticalRole {
+enum TacticalScore {
 	/** Destroys towers */
 	PUSHER,
 	/** Strong AOE that can stop enemy push */
