@@ -78,10 +78,9 @@ class StrategyLayoutPanel extends JPanel {
 			def refinedValues = e.value.is(dragAwayUnawareContainer) ? e.value.data - draggedAway : e.value.data
 			for (hero in refinedValues) {
 				if (strategy.containsHero(hero)) {
-					// TODO: Notify user, that duplicates are not allowed
 					return false
 				}
-				strategy.putIfNew(hero, e.key)
+				strategy.put(hero, e.key)
 			}
 		}
 		if (!validateStrategy(strategy)) {
@@ -96,23 +95,23 @@ class StrategyLayoutPanel extends JPanel {
 		return strategy.size() <= 5
 	}
 	
+	
 	public boolean setStrategy(StrategyLayout strategy){
-		if (validateStrategy(strategy)){
-			this.strategy.setTo(strategy)
-			Map <LP, List <HeroBaseStats>> laneHeroes = [:]
-			for (e in strategy.heroesToLanesMap()) {
-				if (!laneHeroes.containsKey(e.value)) {
-					laneHeroes << [(e.value): []]
-				}
-				laneHeroes[e.value] << e.key
-			}
-			for (e in positionToPanelMap) {
-				e.value.setData(laneHeroes[e.key])
-			}
-			return true
-		} else {
+		if (!validateStrategy(strategy)){
 			return false
 		}
+		this.strategy.setTo(strategy)
+		Map <LP, List <HeroBaseStats>> laneHeroes = [:]
+		for (e in strategy.heroesToLanesMap()) {
+			if (!laneHeroes.containsKey(e.value)) {
+				laneHeroes << [(e.value): []]
+			}
+			laneHeroes[e.value] << e.key
+		}
+		for (e in positionToPanelMap) {
+			e.value.setData(laneHeroes[e.key])
+		}
+		return true
 	}
 	
 	public StrategyLayout getStrategy(){

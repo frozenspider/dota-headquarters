@@ -94,7 +94,7 @@ class StrategySaveLoad {
 					throw new ConversionException("Unable to parse heroBase for " + reader.getValue())
 				if (strat.containsHero(heroBase))
 					throw new ConversionException("Duplicate hero found")
-				strat.putIfNew(heroBase, lane)
+				strat.put(heroBase, lane)
 				reader.moveUp()
 			}
 			return strat
