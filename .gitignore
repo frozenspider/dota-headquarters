@@ -11,3 +11,4 @@ bin/*
 stacktrace.log
 /playdota-parsing-result
 /saves
+/release
