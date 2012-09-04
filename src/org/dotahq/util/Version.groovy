@@ -1,5 +1,5 @@
 package org.dotahq.util
 
 class Version {
-	static final String VER = "0.1.1" 
+	static final String VER = "0.1.2" 
 }
